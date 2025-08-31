@@ -3,16 +3,10 @@
 import { motion, useInView, Variants } from "framer-motion"
 import { useRef, useState, useEffect } from "react"
 import { 
-  Code, 
-  Database, 
-  Globe, 
   Smartphone, 
   Cloud, 
-  GitBranch, 
   Palette, 
-  Zap,
   Server,
-  Layers,
   Monitor,
   Cpu
 } from "lucide-react"

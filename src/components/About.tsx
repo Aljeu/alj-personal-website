@@ -2,7 +2,6 @@
 
 import { motion, useInView } from "framer-motion"
 import { useRef, useState, useEffect } from "react"
-import Image from "next/image"
 
 export const About = () => {
   const ref = useRef(null)
@@ -68,7 +67,7 @@ export const About = () => {
           >
             <div className="prose prose-lg dark:prose-invert max-w-none">
               <p className="text-lg leading-relaxed text-muted-foreground">
-                Hello! I'm Agnas, a passionate software developer with a strong foundation in 
+                Hello! I&apos;m Agnas, a passionate software developer with a strong foundation in 
                 computer science and a keen interest in building innovative solutions. I enjoy 
                 working with modern technologies and continuously learning new frameworks and tools.
               </p>
@@ -80,7 +79,7 @@ export const About = () => {
               </p>
               
               <p className="text-lg leading-relaxed text-muted-foreground">
-                When I'm not coding, you can find me exploring new technologies, contributing 
+                When I&apos;m not coding, you can find me exploring new technologies, contributing 
                 to open source projects, or learning about the latest developments in software 
                 engineering and computer science.
               </p>

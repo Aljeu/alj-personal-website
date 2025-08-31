@@ -101,7 +101,7 @@ export const Contact = () => {
             Get In Touch
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            Ready to bring your ideas to life? Let's start a conversation and create something amazing together.
+            Ready to bring your ideas to life? Let&apos;s start a conversation and create something amazing together.
           </p>
         </motion.div>
 
@@ -114,9 +114,9 @@ export const Contact = () => {
             className="space-y-8"
           >
             <div>
-              <h3 className="text-2xl font-semibold mb-6">Let's Connect</h3>
+              <h3 className="text-2xl font-semibold mb-6">Let&apos;s Connect</h3>
               <p className="text-muted-foreground leading-relaxed mb-8">
-                I'm always excited to discuss new opportunities, collaborate on interesting projects, 
+                I&apos;m always excited to discuss new opportunities, collaborate on interesting projects, 
                 or simply connect with fellow developers and tech enthusiasts. Feel free to reach out!
               </p>
             </div>

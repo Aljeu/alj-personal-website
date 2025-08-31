@@ -8,8 +8,6 @@ import {
   Building,
   ChevronRight,
   Award,
-  Users,
-  Code,
   Briefcase,
   Crown,
   TrendingUp
