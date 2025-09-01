@@ -15,7 +15,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Agnas - Software Developer Portfolio",
+  title: "Aljhone Agnas - Portfolio",
   description: "Software Developer & Tech Enthusiast specializing in modern programming languages and innovative solutions.",
 };
 

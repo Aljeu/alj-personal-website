@@ -16,62 +16,31 @@ const skillCategories = [
     title: "Programming Languages",
     icon: Monitor,
     skills: [
-      { name: "JavaScript", level: 85 },
-      { name: "Python", level: 80 },
-      { name: "Java", level: 75 },
-      { name: "C++", level: 70 },
-      { name: "HTML/CSS", level: 90 },
-    ]
-  },
-  {
-    title: "Frameworks & Libraries",
-    icon: Server,
-    skills: [
-      { name: "React", level: 80 },
-      { name: "Node.js", level: 75 },
-      { name: "Express.js", level: 70 },
-      { name: "Django", level: 65 },
-      { name: "Bootstrap", level: 80 },
-    ]
-  },
-  {
-    title: "Databases",
-    icon: Smartphone,
-    skills: [
-      { name: "MySQL", level: 75 },
-      { name: "PostgreSQL", level: 70 },
-      { name: "MongoDB", level: 65 },
-      { name: "SQLite", level: 80 },
-    ]
-  },
-  {
-    title: "Development Tools",
-    icon: Cloud,
-    skills: [
-      { name: "Git & GitHub", level: 85 },
-      { name: "VS Code", level: 90 },
-      { name: "Docker", level: 60 },
-      { name: "Linux", level: 70 },
+      { name: "JavaScript" },
+      { name: "Python" },
+      { name: "Java" },
+      { name: "C++" },
+      { name: "HTML/CSS" },
     ]
   },
   {
     title: "Core Skills",
     icon: Cpu,
     skills: [
-      { name: "Problem Solving", level: 90 },
-      { name: "Data Structures", level: 85 },
-      { name: "Algorithms", level: 80 },
-      { name: "Software Design", level: 75 },
+      { name: "Problem Solving" },
+      { name: "Software Design" },
+      { name: "Finance" },
+      { name: "Project Management" },
     ]
   },
   {
-    title: "Other",
-    icon: Palette,
+    title: "Development Tools",
+    icon: Cloud,
     skills: [
-      { name: "API Development", level: 75 },
-      { name: "Testing", level: 70 },
-      { name: "Agile/Scrum", level: 65 },
-      { name: "Documentation", level: 80 },
+      { name: "Git & GitHub" },
+      { name: "VS Code" },
+      { name: "Docker" },
+      { name: "Linux" },
     ]
   }
 ]
@@ -168,33 +137,31 @@ export const Skills = () => {
                 <h3 className="text-xl font-semibold">{category.title}</h3>
               </div>
 
-              <div className="space-y-4">
+              <div className="flex flex-wrap gap-3">
                 {category.skills.map((skill, skillIndex) => (
                   <motion.div
                     key={skill.name}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
                     transition={{ 
                       duration: 0.5, 
                       delay: (categoryIndex * 0.1) + (skillIndex * 0.05) + 0.3 
                     }}
+                    className="group relative px-3 py-2 bg-gradient-to-r from-purple-500/20 to-cyan-500/20 border border-purple-500/30 rounded-lg text-sm font-medium text-foreground hover:scale-110 transition-all duration-300 overflow-hidden cursor-pointer"
                   >
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-sm font-medium">{skill.name}</span>
-                      <span className="text-xs text-muted-foreground">{skill.level}%</span>
-                    </div>
-                    <div className="w-full bg-muted rounded-full h-2">
-                      <motion.div
-                        className="h-2 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-full"
-                        initial={{ width: 0 }}
-                        animate={isInView ? { width: `${skill.level}%` } : { width: 0 }}
-                        transition={{ 
-                          duration: 1.2, 
-                          delay: (categoryIndex * 0.1) + (skillIndex * 0.05) + 0.5,
-                          ease: "easeOut"
-                        }}
-                      />
-                    </div>
+                    {/* Base gradient background */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-cyan-500/20 transition-opacity duration-300" />
+                    
+                    {/* Animated gradient overlay on hover */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-purple-600/40 via-pink-500/40 via-cyan-400/40 to-purple-600/40 bg-[length:200%_100%] opacity-0 group-hover:opacity-100 group-hover:animate-[gradient-shift_2s_ease-in-out_infinite] transition-opacity duration-300" />
+                    
+                    {/* Enhanced border glow on hover */}
+                    <div className="absolute inset-0 rounded-lg border border-purple-500/30 group-hover:border-purple-400/60 group-hover:shadow-lg group-hover:shadow-purple-500/20 transition-all duration-300" />
+                    
+                    {/* Content */}
+                    <span className="relative z-10 group-hover:text-white transition-colors duration-300">
+                      {skill.name}
+                    </span>
                   </motion.div>
                 ))}
               </div>
@@ -212,10 +179,17 @@ export const Skills = () => {
           <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             <div className="text-center">
               <motion.div
-                className="text-3xl font-bold text-purple-500 mb-2"
+                className="text-3xl font-bold mb-2"
                 initial={{ opacity: 0, scale: 0.5 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.5 }}
+                animate={isInView ? { 
+                  opacity: 1, 
+                  scale: 1,
+                } : { opacity: 0, scale: 0.5 }}
                 transition={{ duration: 0.5, delay: 0.8 }}
+                style={{
+                  animation: isInView ? 'neon-pulse-purple 2s ease-in-out infinite' : 'none',
+                  animationDelay: '1s'
+                }}
               >
                 2+
               </motion.div>
@@ -223,10 +197,17 @@ export const Skills = () => {
             </div>
             <div className="text-center">
               <motion.div
-                className="text-3xl font-bold text-cyan-500 mb-2"
+                className="text-3xl font-bold mb-2"
                 initial={{ opacity: 0, scale: 0.5 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.5 }}
+                animate={isInView ? { 
+                  opacity: 1, 
+                  scale: 1,
+                } : { opacity: 0, scale: 0.5 }}
                 transition={{ duration: 0.5, delay: 0.9 }}
+                style={{
+                  animation: isInView ? 'neon-pulse-cyan 2s ease-in-out infinite' : 'none',
+                  animationDelay: '1.5s'
+                }}
               >
                 15+
               </motion.div>
@@ -234,10 +215,17 @@ export const Skills = () => {
             </div>
             <div className="text-center">
               <motion.div
-                className="text-3xl font-bold text-blue-500 mb-2"
+                className="text-3xl font-bold mb-2"
                 initial={{ opacity: 0, scale: 0.5 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.5 }}
+                animate={isInView ? { 
+                  opacity: 1, 
+                  scale: 1,
+                } : { opacity: 0, scale: 0.5 }}
                 transition={{ duration: 0.5, delay: 1.0 }}
+                style={{
+                  animation: isInView ? 'neon-pulse-blue 2s ease-in-out infinite' : 'none',
+                  animationDelay: '2s'
+                }}
               >
                 8+
               </motion.div>
