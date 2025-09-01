@@ -34,7 +34,7 @@ export const Footer = () => {
             transition={{ duration: 0.6 }}
             className="text-center md:text-left"
           >
-            <h3 className="text-xl font-bold bg-gradient-to-r from-purple-500 to-cyan-500 bg-clip-text text-transparent mb-2">
+            <h3 className="text-xl font-bold gradient-text-accent mb-2">
               Aljhone Agnas
             </h3>
             <p className="text-muted-foreground text-sm">

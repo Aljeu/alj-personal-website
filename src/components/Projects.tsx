@@ -5,6 +5,7 @@ import { useRef, useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ExternalLink, Github } from "lucide-react"
+import { useViewportSection } from "@/hooks/useViewportSection"
 
 const projects = [
   {
@@ -72,6 +73,7 @@ const projects = [
 export const Projects = () => {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-200px" })
+  const { getSectionHeight, getVerticalSpacing, getHorizontalSpacing, getContainerMaxWidth } = useViewportSection()
   const [filter, setFilter] = useState("all")
   
   const [displayedText, setDisplayedText] = useState("")
@@ -123,20 +125,23 @@ export const Projects = () => {
   }
 
   return (
-    <section id="projects" className="py-20 relative overflow-hidden">
+    <section 
+      id="projects" 
+      className={`${getSectionHeight()} ${getVerticalSpacing()} ${getHorizontalSpacing()} relative overflow-hidden flex items-center`}
+    >
       <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/20 to-background"></div>
       
-      <div className="max-w-7xl mx-auto px-6 relative z-10" ref={ref}>
+      <div className={`${getContainerMaxWidth()} mx-auto w-full relative z-10`} ref={ref}>
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center mb-8 sm:mb-12 lg:mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-500 to-cyan-500 bg-clip-text text-transparent">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 gradient-text-heading">
             Featured Projects
           </h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto mb-8 min-h-[60px]">
+          <p className="text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto mb-6 sm:mb-8 min-h-[60px]">
             {displayedText}
             {showCursor && (
               <motion.span

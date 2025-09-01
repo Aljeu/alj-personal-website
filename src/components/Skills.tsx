@@ -133,7 +133,7 @@ export const Skills = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-500 to-cyan-500 bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 gradient-text-heading">
             Skills & Expertise
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto min-h-[60px]">

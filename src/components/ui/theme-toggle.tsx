@@ -1,144 +1,150 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Moon, Sun } from "lucide-react"
-import { useEffect, useState } from "react"
+import { Monitor, Moon, Sun } from "lucide-react"
+import { useTheme } from "@/hooks/use-theme"
 
 export const ThemeToggle = () => {
-  const [isDark, setIsDark] = useState(false)
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-    // Check for saved theme preference or default to system preference
-    const savedTheme = localStorage.getItem("theme")
-    const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
-    
-    if (savedTheme === "dark" || (!savedTheme && systemPrefersDark)) {
-      setIsDark(true)
-      document.documentElement.classList.add("dark")
-    } else {
-      setIsDark(false)
-      document.documentElement.classList.remove("dark")
-    }
-  }, [])
-
-  useEffect(() => {
-    if (mounted) {
-      if (isDark) {
-        document.documentElement.classList.add("dark")
-        localStorage.setItem("theme", "dark")
-      } else {
-        document.documentElement.classList.remove("dark")
-        localStorage.setItem("theme", "light")
-      }
-    }
-  }, [isDark, mounted])
+  const { theme, resolvedTheme, cycleTheme, mounted } = useTheme()
 
   if (!mounted) {
     return (
-      <div className="w-16 h-8 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse" />
+      <div className="w-20 h-10 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse" />
     )
   }
 
+  const getThemeIcon = () => {
+    switch (theme) {
+      case "light":
+        return <Sun className="h-4 w-4 text-amber-600" />
+      case "dark":
+        return <Moon className="h-4 w-4 text-indigo-600" fill="currentColor" />
+      case "system":
+        return <Monitor className="h-4 w-4 text-blue-600" />
+      default:
+        return <Monitor className="h-4 w-4 text-blue-600" />
+    }
+  }
+
+  const getThemeLabel = () => {
+    switch (theme) {
+      case "light":
+        return "LIGHT"
+      case "dark":
+        return "DARK"
+      case "system":
+        return `SYSTEM (${resolvedTheme.toUpperCase()})`
+      default:
+        return "SYSTEM"
+    }
+  }
+
+  const getThemeColors = () => {
+    switch (theme) {
+      case "light":
+        return {
+          bg: "bg-gradient-to-r from-amber-100 to-orange-100",
+          border: "border-amber-200",
+          buttonBg: "bg-white",
+          text: "text-amber-700"
+        }
+      case "dark":
+        return {
+          bg: "bg-gradient-to-r from-indigo-900 to-purple-900",
+          border: "border-indigo-700",
+          buttonBg: "bg-gray-800",
+          text: "text-indigo-300"
+        }
+      case "system":
+        return {
+          bg: "bg-gradient-to-r from-blue-100 to-cyan-100 dark:from-blue-900 dark:to-cyan-900",
+          border: "border-blue-200 dark:border-blue-700",
+          buttonBg: "bg-white dark:bg-gray-800",
+          text: "text-blue-700 dark:text-blue-300"
+        }
+      default:
+        return {
+          bg: "bg-gradient-to-r from-blue-100 to-cyan-100 dark:from-blue-900 dark:to-cyan-900",
+          border: "border-blue-200 dark:border-blue-700",
+          buttonBg: "bg-white dark:bg-gray-800",
+          text: "text-blue-700 dark:text-blue-300"
+        }
+    }
+  }
+
+  const colors = getThemeColors()
+
   return (
-    <motion.button
-      onClick={() => setIsDark(!isDark)}
-      className={`relative flex items-center w-16 h-8 rounded-full p-1 transition-all duration-300 ${
-        isDark 
-          ? "bg-gray-800 shadow-inner" 
-          : "bg-gray-200 shadow-sm"
-      } hover:shadow-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50`}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.98 }}
-      aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
-    >
-      {/* Background gradient overlay */}
-      <motion.div
-        className={`absolute inset-0.5 rounded-full transition-opacity duration-300 ${
-          isDark 
-            ? "bg-gradient-to-r from-blue-600 to-indigo-700" 
-            : "bg-gradient-to-r from-amber-400 to-orange-500"
-        }`}
-        animate={{ opacity: 0.8 }}
-      />
-      
-      {/* Toggle circle */}
-      <motion.div
-        className="relative z-10 w-6 h-6 bg-white rounded-full shadow-lg flex items-center justify-center"
-        animate={{
-          x: isDark ? 32 : 0,
-        }}
-        transition={{
-          type: "spring",
-          stiffness: 700,
-          damping: 30,
-        }}
+    <div className="flex flex-col items-center space-y-2">
+      <motion.button
+        onClick={cycleTheme}
+        className={`relative flex items-center justify-center w-20 h-10 rounded-full p-1 border transition-all duration-300 ${colors.bg} ${colors.border} hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        aria-label={`Current theme: ${theme}. Click to cycle through themes`}
       >
+        {/* Theme indicator circle */}
         <motion.div
-          initial={false}
+          className={`w-8 h-8 rounded-full shadow-lg flex items-center justify-center ${colors.buttonBg}`}
           animate={{ 
-            rotate: isDark ? 360 : 0,
+            rotate: [0, 360],
             scale: [1, 1.1, 1]
           }}
           transition={{ 
             rotate: { duration: 0.5 },
-            scale: { duration: 0.2 }
+            scale: { duration: 0.3 }
           }}
+          key={theme} // This will trigger the animation when theme changes
         >
-          {isDark ? (
-            <Moon className="h-3.5 w-3.5 text-indigo-600" fill="currentColor" />
-          ) : (
-            <Sun className="h-3.5 w-3.5 text-amber-600" />
-          )}
+          {getThemeIcon()}
         </motion.div>
-      </motion.div>
+        
+        {/* Background pattern for system theme */}
+        {theme === "system" && (
+          <motion.div
+            className="absolute inset-1 rounded-full opacity-20"
+            style={{
+              background: "repeating-conic-gradient(from 0deg, transparent 0deg, currentColor 2deg, transparent 4deg)"
+            }}
+            animate={{ rotate: 360 }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          />
+        )}
+        
+        {/* Visual indicator for resolved theme in system mode */}
+        {theme === "system" && (
+          <motion.div
+            className={`absolute top-0.5 right-0.5 w-2 h-2 rounded-full ${
+              resolvedTheme === "dark" ? "bg-indigo-400" : "bg-amber-400"
+            }`}
+            animate={{ 
+              scale: [1, 1.2, 1],
+              opacity: [0.7, 1, 0.7]
+            }}
+            transition={{ 
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+        )}
+      </motion.button>
       
-      {/* Background icons */}
-      <div className="absolute inset-0 flex items-center justify-between px-2 pointer-events-none">
-        <motion.div
-          animate={{ 
-            opacity: isDark ? 0.3 : 0.7,
-            scale: isDark ? 0.8 : 1
-          }}
-          transition={{ duration: 0.3 }}
-        >
-          <Sun className="h-3 w-3 text-amber-300" />
-        </motion.div>
-        <motion.div
-          animate={{ 
-            opacity: isDark ? 0.7 : 0.3,
-            scale: isDark ? 1 : 0.8
-          }}
-          transition={{ duration: 0.3 }}
-        >
-          <Moon className="h-3 w-3 text-blue-300" fill="currentColor" />
-        </motion.div>
-      </div>
-      
-      {/* Light mode label */}
+      {/* Theme label */}
       <motion.span
-        className="absolute -bottom-6 left-0 text-xs font-medium text-gray-500 dark:text-gray-400"
+        className={`text-xs font-semibold tracking-wider text-center ${colors.text}`}
         animate={{ 
-          opacity: isDark ? 0 : 1,
-          y: isDark ? 5 : 0
+          opacity: [0.7, 1, 0.7],
+          scale: [1, 1.05, 1]
         }}
-        transition={{ duration: 0.2 }}
-      >
-        LIGHT
-      </motion.span>
-      
-      {/* Dark mode label */}
-      <motion.span
-        className="absolute -bottom-6 right-0 text-xs font-medium text-gray-500 dark:text-gray-400"
-        animate={{ 
-          opacity: isDark ? 1 : 0,
-          y: isDark ? 0 : 5
+        transition={{ 
+          duration: 2,
+          repeat: Infinity,
+          ease: "easeInOut"
         }}
-        transition={{ duration: 0.2 }}
       >
-        DARK
+        {getThemeLabel()}
       </motion.span>
-    </motion.button>
+    </div>
   )
 }

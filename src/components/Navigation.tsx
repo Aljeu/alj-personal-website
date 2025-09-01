@@ -81,7 +81,7 @@ export const Navigation = () => {
         <div className="flex items-center justify-between">
           <motion.div
             whileHover={{ scale: 1.05 }}
-            className="text-xl font-bold bg-gradient-to-r from-purple-500 to-cyan-500 bg-clip-text text-transparent"
+            className="text-xl font-bold gradient-text-accent"
           >
             Aljhone Agnas
           </motion.div>
@@ -99,7 +99,7 @@ export const Navigation = () => {
                 {activeSection === item.id && (
                   <motion.div
                     layoutId="activeSection"
-                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-500 to-cyan-500"
+                    className="absolute -bottom-1 left-0 right-0 h-0.5 nav-indicator"
                     transition={{ type: "spring", bounce: 0.25, duration: 0.5 }}
                   />
                 )}

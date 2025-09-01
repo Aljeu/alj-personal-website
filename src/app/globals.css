@@ -3,6 +3,29 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* System theme detection media queries */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    color-scheme: dark;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not(.dark) {
+    color-scheme: light;
+  }
+}
+
+/* Smooth theme transitions */
+*,
+*::before,
+*::after {
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -133,6 +156,63 @@
   }
 }
 
+@keyframes gradient-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  20% {
+    background-position: 100% 0%;
+  }
+  40% {
+    background-position: 0% 100%;
+  }
+  60% {
+    background-position: 100% 50%;
+  }
+  80% {
+    background-position: 50% 0%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes gradient-wave {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 100% 0%;
+  }
+  50% {
+    background-position: 200% 50%;
+  }
+  75% {
+    background-position: 100% 100%;
+  }
+}
+
+@keyframes button-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.4), 0 0 40px rgba(168, 85, 247, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(168, 85, 247, 0.6), 0 0 60px rgba(168, 85, 247, 0.3);
+  }
+}
+
 @keyframes float {
   0%, 100% {
     transform: translateY(0px);
@@ -156,6 +236,230 @@
   background-size: 400% 400%;
 }
 
+.animate-gradient-flow {
+  animation: gradient-flow 2s ease infinite;
+  background-size: 300% 300%;
+}
+
+.animate-gradient-shift {
+  animation: gradient-shift 3s ease infinite;
+  background-size: 300% 300%;
+}
+
+.animate-gradient-wave {
+  animation: gradient-wave 4s ease infinite;
+  background-size: 400% 400%;
+}
+
+.animate-button-glow {
+  animation: button-glow 2s ease-in-out infinite;
+}
+
+/* Living gradient button effect */
+.living-gradient {
+  background: linear-gradient(-45deg, #8b5cf6, #06b6d4, #ec4899, #3b82f6, #8b5cf6);
+  background-size: 400% 400%;
+  animation: gradient-wave 3s ease infinite;
+}
+
+.living-gradient:hover {
+  animation: gradient-shift 2s ease infinite;
+  background-size: 500% 500%;
+}
+
+/* Abstract wave animations for About section */
+@keyframes wave-flow-1 {
+  0%, 100% {
+    transform: translateX(0%) translateY(0%) rotate(0deg);
+  }
+  25% {
+    transform: translateX(-3%) translateY(2%) rotate(0.5deg);
+  }
+  50% {
+    transform: translateX(2%) translateY(-1%) rotate(-0.3deg);
+  }
+  75% {
+    transform: translateX(-1%) translateY(3%) rotate(0.2deg);
+  }
+}
+
+@keyframes wave-flow-2 {
+  0%, 100% {
+    transform: translateX(0%) translateY(0%) rotate(0deg);
+  }
+  33% {
+    transform: translateX(4%) translateY(-2%) rotate(-0.4deg);
+  }
+  66% {
+    transform: translateX(-2%) translateY(1%) rotate(0.6deg);
+  }
+}
+
+@keyframes wave-flow-3 {
+  0%, 100% {
+    transform: translateX(0%) translateY(0%) rotate(0deg);
+  }
+  50% {
+    transform: translateX(-1%) translateY(2%) rotate(0.1deg);
+  }
+}
+
+/* Flowing lines background - covers entire section and extends upward */
+.flowing-lines {
+  position: absolute;
+  top: -150px; /* Extend upward beyond section start */
+  left: -100px; /* Extend beyond left edge */
+  right: -100px; /* Extend beyond right edge */
+  bottom: -50px; /* Extend below section */
+  width: calc(100% + 200px); /* Cover full width plus edges */
+  height: calc(100% + 200px); /* Include extensions */
+  overflow: hidden;
+  z-index: 1;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.flowing-lines::before,
+.flowing-lines::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.flowing-lines::before {
+  background-image: 
+    repeating-linear-gradient(
+      15deg,
+      transparent,
+      transparent 6px,
+      rgba(139, 92, 246, 0.08) 6px,
+      rgba(139, 92, 246, 0.08) 7px
+    ),
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      rgba(6, 182, 212, 0.06) 10px,
+      rgba(6, 182, 212, 0.06) 11px
+    ),
+    repeating-linear-gradient(
+      75deg,
+      transparent,
+      transparent 14px,
+      rgba(236, 72, 153, 0.05) 14px,
+      rgba(236, 72, 153, 0.05) 15px
+    ),
+    repeating-linear-gradient(
+      105deg,
+      transparent,
+      transparent 18px,
+      rgba(59, 130, 246, 0.04) 18px,
+      rgba(59, 130, 246, 0.04) 19px
+    );
+  animation: wave-flow-1 25s linear infinite;
+}
+
+.flowing-lines::after {
+  background-image: 
+    repeating-linear-gradient(
+      -15deg,
+      transparent,
+      transparent 8px,
+      rgba(139, 92, 246, 0.06) 8px,
+      rgba(139, 92, 246, 0.06) 9px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 12px,
+      rgba(6, 182, 212, 0.05) 12px,
+      rgba(6, 182, 212, 0.05) 13px
+    ),
+    repeating-linear-gradient(
+      -75deg,
+      transparent,
+      transparent 16px,
+      rgba(236, 72, 153, 0.04) 16px,
+      rgba(236, 72, 153, 0.04) 17px
+    );
+  animation: wave-flow-2 30s linear infinite reverse;
+}
+
+/* Dark theme adjustments */
+.dark .flowing-lines {
+  opacity: 0.6;
+}
+
+.dark .flowing-lines::before {
+  background-image: 
+    repeating-linear-gradient(
+      15deg,
+      transparent,
+      transparent 6px,
+      rgba(139, 92, 246, 0.12) 6px,
+      rgba(139, 92, 246, 0.12) 7px
+    ),
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      rgba(6, 182, 212, 0.10) 10px,
+      rgba(6, 182, 212, 0.10) 11px
+    ),
+    repeating-linear-gradient(
+      75deg,
+      transparent,
+      transparent 14px,
+      rgba(236, 72, 153, 0.08) 14px,
+      rgba(236, 72, 153, 0.08) 15px
+    ),
+    repeating-linear-gradient(
+      105deg,
+      transparent,
+      transparent 18px,
+      rgba(59, 130, 246, 0.06) 18px,
+      rgba(59, 130, 246, 0.06) 19px
+    );
+}
+
+.dark .flowing-lines::after {
+  background-image: 
+    repeating-linear-gradient(
+      -15deg,
+      transparent,
+      transparent 8px,
+      rgba(139, 92, 246, 0.10) 8px,
+      rgba(139, 92, 246, 0.10) 9px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 12px,
+      rgba(6, 182, 212, 0.08) 12px,
+      rgba(6, 182, 212, 0.08) 13px
+    ),
+    repeating-linear-gradient(
+      -75deg,
+      transparent,
+      transparent 16px,
+      rgba(236, 72, 153, 0.06) 16px,
+      rgba(236, 72, 153, 0.06) 17px
+    );
+}
+
+/* Section isolation - ensure backgrounds don't bleed */
+section {
+  isolation: isolate;
+}
+
+#about {
+  position: relative;
+  z-index: 1;
+}
+
 .animate-float {
   animation: float 3s ease-in-out infinite;
 }
@@ -164,9 +468,153 @@
   animation: glow 2s ease-in-out infinite;
 }
 
-/* Smooth scrolling */
+/* Smooth scrolling with better mobile support */
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 80px; /* Account for fixed navigation */
+}
+
+/* Performance optimizations */
+body {
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Viewport sections for better responsive design */
+.viewport-section {
+  min-height: 100vh;
+  min-height: 100dvh; /* Dynamic viewport height for mobile */
+}
+
+/* Responsive text scaling for mobile */
+@media (max-width: 640px) {
+  .responsive-text-base {
+    font-size: 0.875rem; /* 14px */
+    line-height: 1.5rem; /* 24px */
+  }
+  
+  .responsive-text-lg {
+    font-size: 1rem; /* 16px */
+    line-height: 1.5rem; /* 24px */
+  }
+  
+  .responsive-text-xl {
+    font-size: 1.125rem; /* 18px */
+    line-height: 1.75rem; /* 28px */
+  }
+  
+  .responsive-text-2xl {
+    font-size: 1.25rem; /* 20px */
+    line-height: 1.75rem; /* 28px */
+  }
+  
+  .responsive-text-3xl {
+    font-size: 1.5rem; /* 24px */
+    line-height: 2rem; /* 32px */
+  }
+  
+  .responsive-text-4xl {
+    font-size: 1.875rem; /* 30px */
+    line-height: 2.25rem; /* 36px */
+  }
+  
+  .responsive-text-5xl {
+    font-size: 2.25rem; /* 36px */
+    line-height: 2.5rem; /* 40px */
+  }
+}
+
+/* Better focus states for accessibility */
+:focus-visible {
+  outline: 2px solid oklch(var(--primary));
+  outline-offset: 2px;
+}
+
+/* Improved button interactions */
+button:hover {
+  transform: translateY(-1px);
+  transition: transform 0.2s ease-in-out;
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .motion-reduce {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Theme-aware gradient text utilities */
+.gradient-text-primary {
+  background: linear-gradient(to right, oklch(0.6 0.19 282.08), oklch(0.6 0.19 252.76), oklch(0.6 0.18 200.72));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.dark .gradient-text-primary {
+  background: linear-gradient(to right, oklch(0.75 0.19 282.08), oklch(0.75 0.19 252.76), oklch(0.75 0.18 200.72));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-heading {
+  background: linear-gradient(to right, oklch(0.55 0.19 282.08), oklch(0.55 0.18 200.72));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.dark .gradient-text-heading {
+  background: linear-gradient(to right, oklch(0.7 0.19 282.08), oklch(0.7 0.18 200.72));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-accent {
+  background: linear-gradient(to right, oklch(0.6 0.19 282.08), oklch(0.6 0.18 200.72));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.dark .gradient-text-accent {
+  background: linear-gradient(to right, oklch(0.75 0.19 282.08), oklch(0.75 0.18 200.72));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Navigation active indicator */
+.nav-indicator {
+  background: linear-gradient(to right, oklch(0.6 0.19 282.08), oklch(0.6 0.18 200.72));
+}
+
+.dark .nav-indicator {
+  background: linear-gradient(to right, oklch(0.7 0.19 282.08), oklch(0.7 0.18 200.72));
 }
 
 /* Custom scrollbar */
